@@ -21,8 +21,11 @@
  *  0  => true
  *  -5 => false
  */
-function isPositive(/* number */) {
-  throw new Error('Not implemented');
+function isPositive(number) {
+  if (number >= 0) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -38,8 +41,14 @@ function isPositive(/* number */) {
  *  -5, 0, 5      => 5
  *  -0.1, 0, 0.2  => 0.2
  */
-function getMaxNumber(/* a, b, c */) {
-  throw new Error('Not implemented');
+function getMaxNumber(a, b, c) {
+  if (a > b && a > c) {
+    return a;
+  }
+  if (b > a && b > c) {
+    return b;
+  }
+  return c;
 }
 
 /**
@@ -61,8 +70,37 @@ function getMaxNumber(/* a, b, c */) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  const dmgArr = [];
+  for (let index = queen.x; index < 9; index += 1) {
+    dmgArr.push({ x: index, y: queen.y });
+  }
+  for (let index = queen.x; index > 0; index -= 1) {
+    dmgArr.push({ x: index, y: queen.y });
+  }
+  for (let index = queen.y; index > 0; index -= 1) {
+    dmgArr.push({ x: queen.x, y: index });
+  }
+  for (let index = queen.y; index < 9; index += 1) {
+    dmgArr.push({ x: queen.x, y: index });
+  }
+  for (let indexY = queen.y, indexX = queen.x; ; indexY += 1, indexX += 1) {
+    dmgArr.push({ x: indexX, y: indexY });
+    if (indexY > 7 || indexX > 7) break;
+  }
+  for (let indexY = queen.y, indexX = queen.x; ; indexY += 1, indexX -= 1) {
+    dmgArr.push({ x: indexX, y: indexY });
+    if (indexY > 7 || indexX < 2) break;
+  }
+  for (let indexY = queen.y, indexX = queen.x; ; indexY -= 1, indexX -= 1) {
+    dmgArr.push({ x: indexX, y: indexY });
+    if (indexY < 2 || indexX < 2) break;
+  }
+  for (let indexY = queen.y, indexX = queen.x; ; indexY -= 1, indexX += 1) {
+    dmgArr.push({ x: indexX, y: indexY });
+    if (indexY < 2 || indexX > 7) break;
+  }
+  return dmgArr.some((elem) => elem.x === king.x && elem.y === king.y);
 }
 
 /**
