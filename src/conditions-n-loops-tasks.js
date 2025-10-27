@@ -369,14 +369,82 @@ function getBalanceIndex(arr) {
  *          [7, 6, 5]
  *        ]
  *        [
- *          [1,  2,  3,  4],
+ *          [1,  2,  3,  4], 
  *  4  =>   [12, 13, 14, 5],
  *          [11, 16, 15, 6],
  *          [10, 9,  8,  7]
  *        ]
+ * 
+ * 
+➡️➡️
+0 0 =1
+0 1 =2
+0 2 =3
+0 3 =4
+⬇️⬇️
+1 3 =5
+2 3 =6
+3 3 =7
+⬅️⬅️
+3 2 =8
+3 1 =9
+3 0 =10
+⬆️⬆️
+2 0 =11
+1 0 =12
+
+1 1 =13
+1 2 =14
+
+2 2 =15
+
+2 1 =16
+ * 
+ * 
+ * 
+ * 
+ * 
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const countStart = 0;
+  const corectStart = 0;
+  let resultArr = [];
+  const max = size * size;
+  for (let i = 0; i < size; i += 1) {
+    const temp = [];
+    for (let j = 0; j < size; j += 1) {
+      temp[j] = j;
+    }
+    resultArr[i] = temp;
+  }
+  function spiral(arr, corect, tempCount) {
+    const tempArr = arr;
+    let count = tempCount;
+    if (count === max) return arr;
+    for (let i = corect; i <= arr.length - 1 - corect; i += 1) {
+      if (count === max) return arr;
+      count += 1;
+      tempArr[corect][i] = count;
+    }
+    for (let i = corect + 1; i <= arr.length - 1 - corect; i += 1) {
+      if (count === max) return arr;
+      count += 1;
+      tempArr[i][arr.length - 1 - corect] = count;
+    }
+    for (let i = arr.length - 1 - corect - 1; i >= corect; i -= 1) {
+      if (count === max) return arr;
+      count += 1;
+      tempArr[arr.length - 1 - corect][i] = count;
+    }
+    for (let i = arr.length - 1 - corect - 1; i > corect; i -= 1) {
+      if (count === max) return arr;
+      count += 1;
+      tempArr[i][corect] = count;
+    }
+    return spiral(arr, corect + 1, count);
+  }
+  resultArr = spiral(resultArr, corectStart, countStart);
+  return resultArr;
 }
 
 /**
